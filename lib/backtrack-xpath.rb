@@ -12,6 +12,8 @@ class BacktrackXPath
     @xpath
   end
 
+  alias to_xpath to_s
+
   private
 
   def attribute_scan(node)
