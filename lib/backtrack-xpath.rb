@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # file: backtrack-xpath.rb
 
@@ -15,6 +15,7 @@ class BacktrackXPath
   private
 
   def attribute_scan(node)
+
     result = ''
     attr = %w(id class).detect {|x| node.attributes.has_key? x}
     if attr then
@@ -24,10 +25,12 @@ class BacktrackXPath
     result
   end
 
-  def doc_scan(node)
+  def doc_scan(node)    
+
     name = node.name
-    attribute = attribute_scan(node)
-    result = doc_scan(node.parent) if node.parent.name != node.root.name
-    [result, name.to_s + attribute]
+    attribute = node.attributes ? attribute_scan(node) : ''
+    result = node.parent.parent ? doc_scan(node.parent) : ''
+
+    [result, name + attribute]
   end
 end
