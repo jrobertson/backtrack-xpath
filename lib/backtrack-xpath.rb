@@ -27,11 +27,13 @@ class BacktrackXPath
     result
   end
 
-  def doc_scan(node)    
+  def doc_scan(node)
+    
+    return unless node.parent
 
     name = node.name
     attribute = node.attributes ? attribute_scan(node) : ''
-    result = node.parent.parent ? doc_scan(node.parent) : ''
+    result = doc_scan(node.parent)
 
     [result, name + attribute]
   end
