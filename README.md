@@ -6,32 +6,32 @@ Example:
 
     require 'backtrack-xpath'
 
-    xml =&lt;&lt;XML
-    &lt;root&gt;
-      &lt;a&gt;
-        &lt;summary&gt;&lt;n/&gt;&lt;x1/&gt;&lt;x2/&gt;&lt;/summary&gt;
-        &lt;records&gt;
-          &lt;b&gt;
-            &lt;summary&gt;&lt;y color='blue'/&gt;&lt;y2/&gt;&lt;/summary&gt;
-            &lt;records&gt;
-              &lt;c&gt;&lt;summary&gt;&lt;n/&gt;&lt;/summary&gt;&lt;records/&gt;&lt;/c&gt;
-            &lt;/records&gt;
-          &lt;/b&gt;
-          &lt;b&gt;
-            &lt;summary&gt;&lt;y color='red'/&gt;&lt;y2/&gt;&lt;/summary&gt;
-            &lt;records&gt;
-              &lt;c&gt;&lt;summary&gt;&lt;n/&gt;&lt;/summary&gt;&lt;records/&gt;&lt;/c&gt;
-            &lt;/records&gt;
-          &lt;/b&gt;
+    xml =<<XML
+    <root>
+      <a>
+        <summary><n/><x1/><x2/></summary>
+        <records>
+          <b>
+            <summary><y color='blue'/><y2/></summary>
+            <records>
+              <c><summary><n/></summary><records/></c>
+            </records>
+          </b>
+          <b>
+            <summary><y color='red'/><y2/></summary>
+            <records>
+              <c><summary><n/></summary><records/></c>
+            </records>
+          </b>
 
-        &lt;/records&gt;
-      &lt;/a&gt;
-    &lt;/root&gt;  
+        </records>
+      </a>
+    </root>  
     XML
 
     doc = Rexle.new xml
     node = doc.root.element '//y'
-    puts BacktrackXPath.new(node).to_xpath #=&gt; root/a/records/b/summary/y
+    puts BacktrackXPath.new(node).to_xpath #=> root/a/records/b/summary/y
 
 
 Note: An id or class attribute will be used in the XPath to help identify the element if they exist in any of the elements.
