@@ -2,8 +2,6 @@
 
 # file: backtrack-xpath.rb
 
-# for use with the Rexle gem
-
 class BacktrackXPath
 
   def initialize(node)
@@ -21,12 +19,9 @@ class BacktrackXPath
   def attribute_scan(node)
 
     result = ''
-    attr = %i(id class).detect {|x| node.attributes.has_key? x}
-    
+    attr = %w(id class).detect {|x| node.attributes.has_key? x}
     if attr then
-      node.attribute(attr)
-      value = attr == :id ? node.attributes[attr] : \
-                                  node.attributes[attr][0]
+      value = node.attribute(attr).value
       result = "[@%s='%s']" % [attr, value]
     end
     result
