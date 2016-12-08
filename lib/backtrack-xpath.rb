@@ -6,8 +6,11 @@
 
 class BacktrackXPath
 
-  def initialize(node)
+  def initialize(node, use_attributes: true)
+    
+    @use_attributes = use_attributes
     @xpath = doc_scan(node).flatten.compact.join('/')
+    
   end
 
   def to_s
@@ -37,7 +40,8 @@ class BacktrackXPath
     return unless node.parent
 
     name = node.name
-    attribute = node.attributes ? attribute_scan(node) : ''
+    
+    attribute = (@use_attributes and node.attributes) ? attribute_scan(node) : ''
     result = doc_scan(node.parent)
 
     [result, name + attribute]
