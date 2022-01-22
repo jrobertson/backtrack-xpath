@@ -6,9 +6,9 @@
 
 class BacktrackXPath
 
-  def initialize(node, use_attributes: true)
+  def initialize(node, use_attributes: true, ignore_id: false)
 
-    @use_attributes = use_attributes
+    @use_attributes, @ignore_id = use_attributes, ignore_id
     @xpath = doc_scan(node).flatten.compact.join('/')
 
   end
@@ -24,12 +24,20 @@ class BacktrackXPath
   def attribute_scan(node)
 
     result = ''
-    attr = [:id, :class, 'id', 'class'].detect {|x| node.attributes.has_key? x}
+
+    list = @ignore_id ? [:class,'class'] : [:id, :class, 'id', 'class']
+    attr = list.detect {|x| node.attributes.has_key? x}
 
     if attr then
       node.attribute(attr)
-      value = attr.to_sym == :id ? node.attributes[attr] : \
-                                  node.attributes[attr][0]
+
+      value = if attr.to_sym == :id then
+        node.attributes[attr]
+      else
+        attrval = node.attributes[attr]
+        attrval[0] if attrval.is_a? Array
+      end
+
       result = "[@%s='%s']" % [attr, value]
     end
     result
