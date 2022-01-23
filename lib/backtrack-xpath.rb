@@ -35,7 +35,7 @@ class BacktrackXPath
         node.attributes[attr]
       else
         attrval = node.attributes[attr]
-        attrval[0] if attrval.is_a? Array
+        attrval[-1] if attrval.is_a? Array
       end
 
       result = "[@%s='%s']" % [attr, value]
